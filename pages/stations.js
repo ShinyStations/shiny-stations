@@ -1,24 +1,20 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
 import { Entity, Scene } from 'aframe-react';
 
-export default class extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      appRendered: false,
-    };
-  }
+export default function Stations() {
 
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      require('aframe')
-      require('aframe-particle-system-component')
-      this.setState({ appRendered: true })
-    }
-  }
+    const [appRendered, setAppRendered] = useState(false);
 
-  render() {
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        require("aframe");
+        require("aframe-particle-system-component");
+        setAppRendered(true);
+      }
+    });
+
     return (
       <div style={{ height: '100%', width: '100%' }}>
         <Head>
@@ -27,8 +23,8 @@ export default class extends React.Component {
             <title>A-Frame React Boilerplate</title>
         </Head>
 
-        {this.state.appRendered &&
-          <Scene>
+        {appRendered &&
+          (<Scene>
             <a-assets>
               <a-asset-item id="station" src="https://storageapi.fleek.co/c4033a1e-dadc-4b4e-b891-6486fc293e81-bucket/shiny-assets/shiny1.glb"></a-asset-item>     
               <img id="skybox" src="https://storageapi.fleek.co/c4033a1e-dadc-4b4e-b891-6486fc293e81-bucket/shiny-assets/skybox.jpeg"></img>
@@ -55,9 +51,8 @@ export default class extends React.Component {
               <a-torus position="0 0.75 -3" rotation="45 20 48" radius="15.5" color="#FFC65D"></a-torus>
             </Entity>
           
-          </Scene>
+          </Scene>)
         }
       </div>
     )
-  }
 }
