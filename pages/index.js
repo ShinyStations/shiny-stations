@@ -21,13 +21,13 @@ const myLoader = () => {
   return `https://cdna.artstation.com/p/assets/images/images/014/196/564/large/maxence-rouillet-2018-11-22-15-42-56-spacestation-cartoon-haircut-3d-model-by-maxence-rouillet-maxencerouillet.jpg`
 }
 
-const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
+const INFURA_PROJECT_ID = '460f40a260564ac4a4f4b3fffb032dad'
 
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider, // required
     options: {
-      infuraId: INFURA_ID, // required
+      infuraId: INFURA_PROJECT_ID, // required
     },
   },
   'custom-walletlink': {
@@ -38,7 +38,7 @@ const providerOptions = {
     },
     options: {
       appName: 'Coinbase', // Your app name
-      networkUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
+      networkUrl: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
       chainId: 1,
     },
     package: WalletLink,
