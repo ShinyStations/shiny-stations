@@ -1,17 +1,14 @@
 import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ethers } from 'ethers'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import {
-  CloudUploadIcon,
-  CogIcon,
-  LockClosedIcon,
-  MenuIcon,
-  RefreshIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-  XIcon,
-} from '@heroicons/react/outline'
-import { ChevronRightIcon, ExternalLinkIcon } from '@heroicons/react/solid'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
+
+import Web3Modal from 'web3modal'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import WalletLink from 'walletlink'
 
 const navigation = [
   { name: 'Home', href: '#' },
@@ -20,7 +17,58 @@ const navigation = [
   { name: 'About', href: '#' },
 ]
 
+const myLoader = () => {
+  return `https://cdna.artstation.com/p/assets/images/images/014/196/564/large/maxence-rouillet-2018-11-22-15-42-56-spacestation-cartoon-haircut-3d-model-by-maxence-rouillet-maxencerouillet.jpg`
+}
+
+const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
+
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider, // required
+    options: {
+      infuraId: INFURA_ID, // required
+    },
+  },
+  'custom-walletlink': {
+    display: {
+      logo: 'https://play-lh.googleusercontent.com/PjoJoG27miSglVBXoXrxBSLveV6e3EeBPpNY55aiUUBM9Q1RCETKCOqdOkX2ZydqVf0',
+      name: 'Coinbase',
+      description: 'Connect to Coinbase Wallet (not Coinbase App)',
+    },
+    options: {
+      appName: 'Coinbase', // Your app name
+      networkUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
+      chainId: 1,
+    },
+    package: WalletLink,
+    connector: async (_, options) => {
+      const { appName, networkUrl, chainId } = options
+      const walletLink = new WalletLink({
+        appName,
+      })
+      const provider = walletLink.makeWeb3Provider(networkUrl, chainId)
+      await provider.enable()
+      return provider
+    },
+  },
+}
+
 export default function Example() {
+  const connectWallet = async () => {
+    console.log('connecting wallet')
+    const web3Modal = new Web3Modal({
+      network: 'mainnet', // optional
+      cacheProvider: true,
+      providerOptions, // required
+    })
+    const connection = await web3Modal.connect()
+    console.log('Await completed!')
+    const provider = new ethers.providers.Web3Provider(connection)
+    const signer = provider.getSigner()
+    console.log(signer)
+    console.log('Wallet connected!')
+  }
   return (
     <div className="bg-white">
       <Head>
@@ -65,8 +113,8 @@ export default function Example() {
               </div>
               <div className="hidden md:flex md:items-center md:space-x-6">
                 <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-base font-medium text-white bg-gray-600 border border-transparent rounded-md hover:bg-gray-700"
+                  onClick={() => connectWallet()}
+                  className="inline-flex items-center px-4 py-2 text-base font-medium text-white bg-gray-600 border border-transparent rounded-md cursor-pointer hover:bg-gray-700"
                 >
                   Connect Wallet
                 </a>
@@ -83,7 +131,10 @@ export default function Example() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Popover.Panel focus className="absolute inset-x-0 top-0 p-2 transition origin-top transform md:hidden">
+            <Popover.Panel
+              focus
+              className="absolute inset-x-0 top-0 p-2 transition origin-top transform md:hidden"
+            >
               <div className="overflow-hidden bg-white rounded-lg shadow-md ring-1 ring-black ring-opacity-5">
                 <div className="flex items-center justify-between px-5 pt-4">
                   <div>
@@ -114,8 +165,8 @@ export default function Example() {
                   </div>
                   <div className="px-5 mt-6">
                     <a
-                      href="#"
-                      className="block w-full px-4 py-3 font-medium text-center text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700"
+                      onClick={() => connectWallet()}
+                      className="block w-full px-4 py-3 font-medium text-center text-white rounded-md shadow cursor-pointer bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700"
                     >
                       Connect Wallet
                     </a>
@@ -131,16 +182,6 @@ export default function Example() {
               <div className="lg:grid lg:grid-cols-2 lg:gap-8">
                 <div className="max-w-md px-4 mx-auto sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
                   <div className="lg:py-24">
-                    <a
-                      href="#"
-                      className="inline-flex items-center p-1 pr-2 text-white bg-black rounded-full sm:text-base lg:text-sm xl:text-base hover:text-gray-200"
-                    >
-                      <span className="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-gradient-to-r from-teal-500 to-cyan-600 rounded-full">
-                        Launching Soon
-                      </span>
-                      <span className="ml-4 text-sm">in 3 days</span>
-                      <ChevronRightIcon className="w-5 h-5 ml-2 text-gray-500" aria-hidden="true" />
-                    </a>
                     <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
                       <span className="block">Welcome to the</span>
                       <span className="block pb-3 text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-cyan-400 sm:pb-5">
@@ -148,29 +189,44 @@ export default function Example() {
                       </span>
                     </h1>
                     <p className="text-base text-gray-300 sm:text-xl lg:text-lg xl:text-xl">
-                      Our goal is simple, we want to create a place that everyone in the Metaverse can join, while maintaining a project that grows in size and utility for years to come.
+                      Our goal is simple, we want to create a place that
+                      everyone in the Metaverse can join, while maintaining a
+                      project that grows in size and utility for years to come.
                     </p>
                     <div className="mt-10 sm:mt-12">
-                      <form action="#" className="sm:max-w-xl sm:mx-auto lg:mx-0">
+                      <div className="sm:max-w-xl sm:mx-auto lg:mx-0">
                         <div className="sm:flex">
                           <div className="mt-3 sm:mt-0">
-                            <button
-                              type="submit"
-                              className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900"
-                            >
-                              Connect wallet
-                            </button>
+                            <Link href="/stations" passHref>
+                              <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900">
+                                Enter Station
+                              </a>
+                            </Link>
                           </div>
                         </div>
                         <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                        Our first and foremost goal is deliver a wonderful product to those in The Tower - NFT Galleries and Common Room spaces{' '}
+                          Our first and foremost goal is deliver a wonderful
+                          product to those in The Tower - NFT Galleries and
+                          Common Room spaces{' '}
                           <a href="#" className="font-medium text-white">
                             Terms of service
                           </a>
                           .
                         </p>
-                      </form>
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div className="mt-12 -mb-16 sm:-mb-48 lg:m-0 lg:relative">
+                  <div className="max-w-md px-4 mx-auto sm:max-w-2xl sm:px-6 lg:max-w-none lg:px-0">
+                    {/* Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ */}
+                    <Image
+                      loader={myLoader}
+                      className="w-full lg:absolute lg:inset-y-0 lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                      src="https://cdna.artstation.com/p/assets/images/images/014/196/564/large/maxence-rouillet-2018-11-22-15-42-56-spacestation-cartoon-haircut-3d-model-by-maxence-rouillet-maxencerouillet.jpg"
+                      alt="Hero Image"
+                      layout="fill"
+                    />
                   </div>
                 </div>
               </div>
@@ -181,13 +237,16 @@ export default function Example() {
           <div className="relative py-16 bg-gray-50 sm:py-24 lg:py-32">
             <div className="max-w-md px-4 mx-auto text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
               <div>
-                <h2 className="text-base font-semibold tracking-wider uppercase text-cyan-600">Our Vision</h2>
+                <h2 className="text-base font-semibold tracking-wider uppercase text-cyan-600">
+                  Our Vision
+                </h2>
                 <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                   Explore the Stations
                 </p>
                 <p className="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
-                  Phasellus lorem quam molestie id quisque diam aenean nulla in. Accumsan in quis quis nunc, ullamcorper
-                  malesuada. Eleifend condimentum id viverra nulla.
+                  Phasellus lorem quam molestie id quisque diam aenean nulla in.
+                  Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend
+                  condimentum id viverra nulla.
                 </p>
               </div>
             </div>
@@ -199,7 +258,9 @@ export default function Example() {
           </h2>
           <div className="max-w-md px-4 mx-auto sm:max-w-7xl sm:px-6 lg:px-8">
             <div className="py-8 mt-12 border-t border-gray-200">
-              <p className="text-base text-gray-400 xl:text-center">&copy; 2021 Shiny Stations, Inc. All rights reserved.</p>
+              <p className="text-base text-gray-400 xl:text-center">
+                &copy; 2021 Shiny Stations, Inc. All rights reserved.
+              </p>
             </div>
           </div>
         </footer>

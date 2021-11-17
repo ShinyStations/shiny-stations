@@ -6,7 +6,6 @@ import { Entity, Scene } from 'aframe-react';
 export default function Stations() {
 
     const [appRendered, setAppRendered] = useState(false);
-
     useEffect(() => {
       if (typeof window !== "undefined") {
         require("aframe");
