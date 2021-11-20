@@ -241,7 +241,7 @@ export default function Example() {
                   Our Vision
                 </h2>
                 <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                  Explore the Stations
+                  Explore Shiny Station 001
                 </p>
                 <p className="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
                   Phasellus lorem quam molestie id quisque diam aenean nulla in.
@@ -251,6 +251,66 @@ export default function Example() {
               </div>
             </div>
           </div>
+
+          <!-- add aframe embed-->
+          <div id="EmbeddedScene">
+            <a-scene embedded>
+              <a-assets>
+                <a-asset-item id="station" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fstation-001v2.glb?v=1637217145427"></a-asset-item>
+                <a-asset-item id="ring1" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fshiny-ring1.glb?v=1637385359380"></a-asset-item>
+                <a-asset-item id="ring2" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fshiny-ring2.glb?v=1637385358666"></a-asset-item>
+                <a-asset-item id="ring3" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fshiny-ring3.glb?v=1637385360342"></a-asset-item>
+                <a-asset-item id="ring4" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fshiny-ring4.glb?v=1637385359662"></a-asset-item>
+                <a-asset-item id="ring5" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fshiny-ring5.glb?v=1637385358666"></a-asset-item>
+                <a-asset-item id="ring5mirror" src="https://cdn.glitch.me/01ec6f7b-7687-453e-9e56-5c822ee0f51d%2Fshiny-ring5mirror.glb?v=1637385825482"></a-asset-item>
+                <img id="skybox" src="https://cdn.glitch.me/e4dd2bbb-b73b-4b54-ac79-988dca88ae39%2Fngc1333_RGB-c2.jpeg?v=1636767435220"></img>
+              </a-assets>
+
+              <a-entity camera="active: true" look-controls wasd-controls position="0 1.6 12" ></a-entity>
+
+            <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: highPoly; color: #009acd; metalness:1; opacity: 0.5">
+                    <a-entity id="station-as-wearable" gltf-model="#station" scale="0.01 0.01 0.01" position="0 0 0.15" rotation="-90 0 0"></a-entity>
+            </a-entity>
+            <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: highPoly; color: #ffcccc; opacity: 0.5"></a-entity>
+
+              <a-entity id="station001" gltf-model="#station"></a-entity>
+
+
+            <a-cylinder position="0 0.25 0" rotation="0 0 0" height="0.3" color="#4CC3D9" metalness="1"></a-cylinder>
+
+            <a-entity gltf-model="#ring1" animation="property: rotation; to: 0 360 0; dur: 8000; easing: easeInOutQuad; loop: true"></a-entity>
+            <a-entity gltf-model="#ring2" animation="property: rotation; to: 0 -360 0; dur: 4000; easing: easeInOutQuad; loop: true"></a-entity>
+            <a-entity gltf-model="#ring3" animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true"></a-entity>
+            <a-entity gltf-model="#ring5" animation="property: rotation; to: 0 -360 0; dur: 6000; easing: linear; loop: true"></a-entity>
+            <a-entity gltf-model="#ring5mirror" animation="property: rotation; to: 0 360 0; dur: 6000; easing: linear; loop: true"></a-entity>
+
+
+            <a-entity id="solar-system" position="-6 0 -5" rotation="0 45 0" scale="0.4 0.4 0.4">
+                  <a-sphere id="earth" position="0 0.5 0" rotation="0 0 0" color="#4CC3D9"></a-sphere>
+
+              <a-sphere id="mars" scale="0.5 0.5 0.5" position="-2 0.4 0" rotation="0 0 0" color="#4CC3D9"></a-sphere>
+            </a-entity>
+
+            <a-light position="0.4 0 8"> </a-light>
+
+            <a-entity position="0 12.5 12" light="color: #6b7cff"></a-entity>
+
+            <a-light position="0.05188 2.11908 0.75957" light="type: point"> </a-light>
+
+            <a-entity light="type: ambient"></a-entity>
+
+              <a-sky src="#skybox" rotation="0 -90 0"></a-sky>
+
+
+              <!--planets-->
+            <a-entity id="planet01" position="150 20 -40">
+              <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" scale="10 10 10"></a-sphere>
+              <a-torus position="0 0.75 -3" rotation="45 20 48" radius="15.5" color="#FFC65D"></a-torus>
+            </a-entity>
+            </a-scene>
+          </div>
+        <!--end aframe embed-->
+
         </main>
         <footer className="bg-gray-50" aria-labelledby="footer-heading">
           <h2 id="footer-heading" className="sr-only">
