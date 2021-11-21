@@ -252,6 +252,7 @@ export default function Example() {
                         <div className="sm:flex">
                           <div className="mt-3 sm:mt-0">
                             <Link href="/stations" passHref>
+                              <button id ="station-locked-message" onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"> Unlock </button> 
                               <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900">
                                 Enter Station
                               </a>
