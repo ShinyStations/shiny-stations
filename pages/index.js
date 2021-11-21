@@ -239,7 +239,7 @@ export default function Example() {
             <ReactPlayer
               width="100%"
               height="100%"
-              url="https://youtu.be/H6uZ7DSBnvw"
+              url="https://www.youtube.com/watch?v=6d5HosJbTUE&ab_channel=HiroSnow"
             />
             {/* </div> */}
           </div>
