@@ -6,34 +6,12 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 
+import ReactPlayer from 'react-player'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import WalletLink from 'walletlink'
 
 
-// UNLOCK  JS 
-
-window.addEventListener("unlockProtocol.status", function (event) {
-    // We hide all .unlock-content elements
-    document.querySelector(".unlock-content").style.display = "none";
-    // We show only the relevant element
-    document
-      .querySelectorAll(`.unlock-content.${event.detail.state}`)
-      .forEach((element) => {
-        element.style.display = "block";
-      });
-  });
-  
-  window.addEventListener("unlockProtocol.authenticated", function (event) {
-    // event.detail.addresss includes the address of the current user, when known
-  });
-  
-  window.addEventListener("unlockProtocol.transactionSent", function (event) {
-    // event.detail.hash includes the hash of the transaction sent
-  });
-
-
-  
 
 const navigation = [
   { name: 'Home', href: '#' },
@@ -96,13 +74,9 @@ export default function Example() {
   }
   return (
     <div className="bg-white">
-    
-        
       <Head>
-    
         <title>Shiny Stations</title>
         <link rel="icon" href="/favicon.ico" />
-    
       </Head>
       <div className="relative overflow-hidden">
         <Popover as="header" className="relative">
@@ -226,23 +200,30 @@ export default function Example() {
                       <div className="sm:max-w-xl sm:mx-auto lg:mx-0">
                         <div className="sm:flex">
                           <div className="mt-3 sm:mt-0">
-                            <Link href="/stations" passHref>
-                              <button id ="station-locked-message" onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"> Unlock </button> 
+                            <Link href="https://app.unlock-protocol.com/checkout?redirectUri=https%3A%2F%2Fholy-wind-5049.on.fleek.co%2F&paywallConfig=%7B%22locks%22%3A%7B%220x1A68bbBC936473b0c0474FBA0B520A098E642239%22%3A%7B%22network%22%3A4%7D%7D%2C%22pessimistic%22%3Atrue%2C%22persistentCheckout%22%3Atrue%2C%22icon%22%3A%22https%3A%2F%2Flocksmith.unlock-protocol.com%2Flock%2F0x1A68bbBC936473b0c0474FBA0B520A098E642239%2Ficon%22%7D" passHref>
                               <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900">
-                             
-                   
+                                Enter Public Station (Rinkeby)
                               </a>
                             </Link>
                           </div>
                         </div>
+                    <div className="mt-10 sm:mt-12">
+                      <div className="sm:max-w-xl sm:mx-auto lg:mx-0">
+                        <div className="sm:flex">
+                          <div className="mt-3 sm:mt-0">
+                              <Link href="https://app.unlock-protocol.com/checkout?redirectUri=https%3A%2F%2Fshiny-stations-001.on.fleek.co%2Fshiny-holder-station.html&paywallConfig=%7B%22locks%22%3A%7B%220x0240eBaCA15628D86e72DB13F4B49cA87Fb4f1Ab%22%3A%7B%22network%22%3A137%7D%7D%2C%22pessimistic%22%3Atrue%2C%22persistentCheckout%22%3Atrue%2C%22icon%22%3A%22https%3A%2F%2Flocksmith.unlock-protocol.com%2Flock%2F0x0240eBaCA15628D86e72DB13F4B49cA87Fb4f1Ab%2Ficon%22%7D" passHref>
+                                <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900"> 
+                              Mint Exclusive NFT Pass (Polygon)
+                                </a> 
+                              </Link>
+                          </div> 
+                        </div>
+                      </div>
+                    </div> 
+                
+
                         <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                          Our first and foremost goal is deliver a wonderful
-                          product to those in The Tower - NFT Galleries and
-                          Common Room spaces{' '}
-                          <a href="#" className="font-medium text-white">
-                            Terms of service
-                          </a>
-                          .
+                        Stored on IPSF - the Shiny Station can never be taken down.  Visit the preview installation until the end of 2021.
                         </p>
                       </div>
                     </div>
@@ -264,7 +245,8 @@ export default function Example() {
             </div>
           </div>
 
-          {/* Feature section with screenshot */}
+          
+          {/* Section */}
           <div className="relative py-16 bg-gray-50 sm:py-24 lg:py-32">
             <div className="max-w-md px-4 mx-auto text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
               <div>
