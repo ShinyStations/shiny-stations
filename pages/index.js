@@ -10,6 +10,31 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import WalletLink from 'walletlink'
 
+
+// UNLOCK  JS 
+
+window.addEventListener("unlockProtocol.status", function (event) {
+    // We hide all .unlock-content elements
+    document.querySelector(".unlock-content").style.display = "none";
+    // We show only the relevant element
+    document
+      .querySelectorAll(`.unlock-content.${event.detail.state}`)
+      .forEach((element) => {
+        element.style.display = "block";
+      });
+  });
+  
+  window.addEventListener("unlockProtocol.authenticated", function (event) {
+    // event.detail.addresss includes the address of the current user, when known
+  });
+  
+  window.addEventListener("unlockProtocol.transactionSent", function (event) {
+    // event.detail.hash includes the hash of the transaction sent
+  });
+
+
+  
+
 const navigation = [
   { name: 'Home', href: '#' },
   { name: 'Enter the Station', href: '#' },
