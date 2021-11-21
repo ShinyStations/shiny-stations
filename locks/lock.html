@@ -1,30 +1,34 @@
 <script>
-    (function(d, s) {
-      var js = d.createElement(s),
-        sc = d.getElementsByTagName(s)[0];
-      js.src = "https://paywall.unlock-protocol.com/static/unlock.latest.min.js";
-      sc.parentNode.insertBefore(js, sc);
-    }(document, "script"));
-  </script>
-  
-  <script>
-    var unlockProtocolConfig = {
-      "network": 4, // Network ID (1 is for mainnet, 4 for rinkeby, 100 for xDai, etc)  
-      "locks": { // this is GoldBracelet Address (I created this lock in rinkeby)
-        "0xA4D3B1D3DD4Bc64ED242bd85f61130B8D842BFeF": {
-          "name": "Gold Bracelet"
-        }
+  (function (d, s) {
+    var js = d.createElement(s),
+      sc = d.getElementsByTagName(s)[0];
+    js.src = "https://paywall.unlock-protocol.com/static/unlock.latest.min.js";
+    sc.parentNode.insertBefore(js, sc);
+  })(document, "script");
+</script>
+
+<script>
+  var unlockProtocolConfig = {
+    network: 4, // Network ID (1 is for mainnet, 4 for rinkeby, 100 for xDai, etc)
+    locks: {
+      // this is GoldBracelet Address (I created this lock in rinkeby)
+      "0xA4D3B1D3DD4Bc64ED242bd85f61130B8D842BFeF": {
+        name: "Gold Bracelet",
       },
-      "icon": "https://unlock-protocol.com/static/images/svg/unlock-word-mark.svg",
-      "callToAction": {
-        "default": "Unlock your Bracelet "
-      }
-    }
-  </script>
-  
-  <h1>Unlock Demo</h1>
-  <p class="unlock-content locked">Station is currently locked </p>
-  <p class="unlock-content unlocked">Station is now OPEN FOR YOU 🎉</p>
-  <p class="unlock-content locked" onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"><button class="button">
-      Unlock!
-    </button></p>
+    },
+    icon: "https://unlock-protocol.com/static/images/svg/unlock-word-mark.svg",
+    callToAction: {
+      default: "Unlock your Bracelet ",
+    },
+  };
+</script>
+
+<h1>Unlock Demo</h1>
+<p class="unlock-content locked">Station is currently locked</p>
+<p class="unlock-content unlocked">Station is now OPEN FOR YOU 🎉</p>
+<p
+  class="unlock-content locked"
+  onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"
+>
+  <button class="button">Unlock!</button>
+</p>
