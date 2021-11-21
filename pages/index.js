@@ -71,9 +71,63 @@ export default function Example() {
   }
   return (
     <div className="bg-white">
+    <h1>Unlock Demo</h1>
+        <span> Station is currently locked </span> -->
+        <button id ="station-locked-message" onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"> Unlock </button> 
+        <div id="station-unlocked-message">Station is now OPEN FOR YOU 🎉</div>
       <Head>
+    
+      <script>
+    
+            (function(d, s) {
+              var js = d.createElement(s),
+                sc = d.getElementsByTagName(s)[0];
+              js.src="https://paywall.unlock-protocol.com/static/unlock.latest.min.js";
+              sc.parentNode.insertBefore(js, sc); }(document, "script"));
+
+            var unlockProtocolConfig = {
+              "network": 4, // Network ID (1 is for mainnet, 4 for rinkeby, 100 for xDai, etc)  
+              "locks": { // this is GoldBracelet Address (I created this lock in rinkeby)
+                "0xA4D3B1D3DD4Bc64ED242bd85f61130B8D842BFeF": {
+                  "name": "Gold Bracelet"
+                }
+              },
+              "icon": "https://unlock-protocol.com/static/images/svg/unlock-word-mark.svg",
+              "callToAction": {
+                "default": "Unlock your Bracelet "
+              }
+            }
+            const  stationUnlockedMessage = document.getElementById("station-unlocked-message");
+            const  stationLockedMessage = document.getElementById("station-locked-message");
+                
+            window.addEventListener('unlockProtocol.status', function(e) {
+                var state = e.detail
+                console.log(state)
+                state = false ; 
+                if (state === "locked") {
+                    //TODO : hide station-unlocked-message
+                    stationUnlockedMessage.hidden = true;
+                    stationLockedMessage.hidden = false; 
+                }
+                else {
+                    //TODO : show station-locked-message
+                    stationLockedMessage.hidden = false; 
+                    stationUnlockedMessage.hidden = true;
+                }
+
+                // the state is a string whose value can either be 'unlocked' or 'locked'...
+                // If state is 'unlocked': implement code here which will be triggered when 
+                // the current visitor has a valid lock key  
+                // If state is 'locked': implement code here which will be
+                // triggered when the current visitor does not have a valid lock key
+            })
+    
+        </script>
+    
+    
         <title>Shiny Stations</title>
         <link rel="icon" href="/favicon.ico" />
+    
       </Head>
       <div className="relative overflow-hidden">
         <Popover as="header" className="relative">
