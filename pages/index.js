@@ -1,4 +1,4 @@
-himport Head from 'next/head'
+import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ethers } from 'ethers'
@@ -204,50 +204,8 @@ export default function Example() {
                             <Link href="/stations" passHref>
                               <button id ="station-locked-message" onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"> Unlock </button> 
                               <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900">
-                              (function(d, s) {
-                var js = d.createElement(s),
-                  sc = d.getElementsByTagName(s)[0];
-                js.src="https://paywall.unlock-protocol.com/static/unlock.latest.min.js";
-                sc.parentNode.insertBefore(js, sc); }(document, "script"));
-
-              var unlockProtocolConfig = {
-                "network": 4, // Network ID (1 is for mainnet, 4 for rinkeby, 100 for xDai, etc)  
-                "locks": { // this is GoldBracelet Address (I created this lock in rinkeby)
-                  "0xA4D3B1D3DD4Bc64ED242bd85f61130B8D842BFeF": {
-                    "name": "Gold Bracelet"
-                  }
-                },
-                "icon": "https://unlock-protocol.com/static/images/svg/unlock-word-mark.svg",
-                "callToAction": {
-                  "default": "Unlock your Bracelet "
-                }
-              }
-              const  stationUnlockedMessage = document.getElementById("station-unlocked-message");
-              const  stationLockedMessage = document.getElementById("station-locked-message");
-
-              window.addEventListener('unlockProtocol.status', function(e) {
-                  var state = e.detail
-                  console.log(state)
-                  state = false ; 
-                  if (state === "locked") {
-                      //TODO : hide station-unlocked-message
-                      stationUnlockedMessage.hidden = true;
-                      stationLockedMessage.hidden = false; 
-                  }
-                  else {
-                      //TODO : show station-locked-message
-                      stationLockedMessage.hidden = false; 
-                      stationUnlockedMessage.hidden = true;
-                  }
-
-                  // the state is a string whose value can either be 'unlocked' or 'locked'...
-                  // If state is 'unlocked': implement code here which will be triggered when 
-                  // the current visitor has a valid lock key  
-                  // If state is 'locked': implement code here which will be
-                  // triggered when the current visitor does not have a valid lock key
-              })
- 
-                                
+                             
+                   
                               </a>
                             </Link>
                           </div>
