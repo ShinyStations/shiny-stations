@@ -1,28 +1,30 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { ethers } from "ethers";
-import { Fragment } from "react";
-import { Popover, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import ReactPlayer from "react-player";
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ethers } from 'ethers'
+import { Fragment } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 
-import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import WalletLink from "walletlink";
+import ReactPlayer from 'react-player'
+import Web3Modal from 'web3modal'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import WalletLink from 'walletlink'
+
+
 
 const navigation = [
-  { name: "Home", href: "#" },
-  { name: "Enter the Station", href: "#" },
-  { name: "Roadmap", href: "#" },
-  { name: "About", href: "#" },
-];
+  { name: 'Home', href: '#' },
+  { name: 'Enter the Station', href: '#' },
+  { name: 'Roadmap', href: '#' },
+  { name: 'About', href: '#' },
+]
 
 const myLoader = () => {
-  return `https://cdna.artstation.com/p/assets/images/images/014/196/564/large/maxence-rouillet-2018-11-22-15-42-56-spacestation-cartoon-haircut-3d-model-by-maxence-rouillet-maxencerouillet.jpg`;
-};
+  return `https://cdna.artstation.com/p/assets/images/images/014/196/564/large/maxence-rouillet-2018-11-22-15-42-56-spacestation-cartoon-haircut-3d-model-by-maxence-rouillet-maxencerouillet.jpg`
+}
 
-const INFURA_PROJECT_ID = "460f40a260564ac4a4f4b3fffb032dad";
+const INFURA_PROJECT_ID = '460f40a260564ac4a4f4b3fffb032dad'
 
 const providerOptions = {
   walletconnect: {
@@ -31,45 +33,45 @@ const providerOptions = {
       infuraId: INFURA_PROJECT_ID, // required
     },
   },
-  "custom-walletlink": {
+  'custom-walletlink': {
     display: {
-      logo: "https://play-lh.googleusercontent.com/PjoJoG27miSglVBXoXrxBSLveV6e3EeBPpNY55aiUUBM9Q1RCETKCOqdOkX2ZydqVf0",
-      name: "Coinbase",
-      description: "Connect to Coinbase Wallet (not Coinbase App)",
+      logo: 'https://play-lh.googleusercontent.com/PjoJoG27miSglVBXoXrxBSLveV6e3EeBPpNY55aiUUBM9Q1RCETKCOqdOkX2ZydqVf0',
+      name: 'Coinbase',
+      description: 'Connect to Coinbase Wallet (not Coinbase App)',
     },
     options: {
-      appName: "Coinbase", // Your app name
+      appName: 'Coinbase', // Your app name
       networkUrl: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
       chainId: 1,
     },
     package: WalletLink,
     connector: async (_, options) => {
-      const { appName, networkUrl, chainId } = options;
+      const { appName, networkUrl, chainId } = options
       const walletLink = new WalletLink({
         appName,
-      });
-      const provider = walletLink.makeWeb3Provider(networkUrl, chainId);
-      await provider.enable();
-      return provider;
+      })
+      const provider = walletLink.makeWeb3Provider(networkUrl, chainId)
+      await provider.enable()
+      return provider
     },
   },
-};
+}
 
 export default function Example() {
   const connectWallet = async () => {
-    console.log("connecting wallet");
+    console.log('connecting wallet')
     const web3Modal = new Web3Modal({
-      network: "mainnet", // optional
+      network: 'mainnet', // optional
       cacheProvider: true,
       providerOptions, // required
-    });
-    const connection = await web3Modal.connect();
-    console.log("Await completed!");
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    console.log(signer);
-    console.log("Wallet connected!");
-  };
+    })
+    const connection = await web3Modal.connect()
+    console.log('Await completed!')
+    const provider = new ethers.providers.Web3Provider(connection)
+    const signer = provider.getSigner()
+    console.log(signer)
+    console.log('Wallet connected!')
+  }
   return (
     <div className="bg-white">
       <Head>
@@ -198,21 +200,30 @@ export default function Example() {
                       <div className="sm:max-w-xl sm:mx-auto lg:mx-0">
                         <div className="sm:flex">
                           <div className="mt-3 sm:mt-0">
-                            <Link href="/stations" passHref>
+                            <Link href="https://app.unlock-protocol.com/checkout?redirectUri=https%3A%2F%2Fshiny-stations.vercel.app%2Fstations&paywallConfig=%7B%22locks%22%3A%7B%220xA4D3B1D3DD4Bc64ED242bd85f61130B8D842BFeF%22%3A%7B%22network%22%3A4%7D%7D%2C%22pessimistic%22%3Atrue%2C%22persistentCheckout%22%3Atrue%2C%22icon%22%3A%22https%3A%2F%2Flocksmith.unlock-protocol.com%2Flock%2F0xA4D3B1D3DD4Bc64ED242bd85f61130B8D842BFeF%2Ficon%22%7D" passHref>
                               <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900">
-                                Enter Station
+                                Enter Public Station (Rinkeby)
                               </a>
                             </Link>
                           </div>
                         </div>
+                    <div className="mt-10 sm:mt-12">
+                      <div className="sm:max-w-xl sm:mx-auto lg:mx-0">
+                        <div className="sm:flex">
+                          <div className="mt-3 sm:mt-0">
+                              <Link href="https://app.unlock-protocol.com/checkout?redirectUri=https%3A%2F%2Fshiny-stations-001.on.fleek.co%2F&paywallConfig=%7B%22locks%22%3A%7B%220x0240eBaCA15628D86e72DB13F4B49cA87Fb4f1Ab%22%3A%7B%22network%22%3A137%7D%7D%2C%22pessimistic%22%3Atrue%2C%22persistentCheckout%22%3Atrue%2C%22icon%22%3A%22https%3A%2F%2Flocksmith.unlock-protocol.com%2Flock%2F0x0240eBaCA15628D86e72DB13F4B49cA87Fb4f1Ab%2Ficon%22%7D" passHref>
+                                <a className="block w-full px-4 py-3 font-medium text-white rounded-md shadow bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:ring-offset-gray-900"> 
+                              Mint Exclusive NFT Pass (Polygon)
+                                </a> 
+                              </Link>
+                          </div> 
+                        </div>
+                      </div>
+                    </div> 
+                
+
                         <p className="mt-3 text-sm text-gray-300 sm:mt-4">
-                          Our first and foremost goal is deliver a wonderful
-                          product to those in The Tower - NFT Galleries and
-                          Common Room spaces{" "}
-                          <a href="#" className="font-medium text-white">
-                            Terms of service
-                          </a>
-                          .
+                        Stored on IPSF - the Shiny Station can never be taken down.  Visit the preview installation until the end of 2021.
                         </p>
                       </div>
                     </div>
@@ -234,48 +245,16 @@ export default function Example() {
             </div>
           </div>
 
-          {/* VIDEO */}
-          <div className="mx-8 my-8 aspect-w-16 aspect-h-9">
-            <ReactPlayer
-              width="100%"
-              height="100%"
-              url="https://www.youtube.com/watch?v=6d5HosJbTUE&ab_channel=HiroSnow"
-            />
-            {/* </div> */}
-          </div>
+          
           {/* Section */}
           <div className="relative py-16 bg-gray-50 sm:py-24 lg:py-32">
             <div className="max-w-md px-4 mx-auto text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
               <div>
                 <h2 className="text-base font-semibold tracking-wider uppercase text-cyan-600">
-                  Section name
+                  Our Vision
                 </h2>
                 <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                   Explore the Stations
-                </p>
-                <p className="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
-                  Phasellus lorem quam molestie id quisque diam aenean nulla in.
-                  Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend
-                  condimentum id viverra nulla.
-                </p>
-              </div>
-            </div>
-          </div>
-          {/* Section */}
-          <div className="relative py-16 bg-gray-50 sm:py-24 lg:py-32">
-            <div className="max-w-md px-4 mx-auto text-center sm:px-6 sm:max-w-3xl lg:px-8 lg:max-w-7xl">
-              <div>
-                <h2 className="text-base font-semibold tracking-wider uppercase text-cyan-600">
-                  Roadmap
-                </h2>
-                <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                  1
-                </p>
-                <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                  2
-                </p>
-                <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                  3
                 </p>
                 <p className="mx-auto mt-5 text-xl text-gray-500 max-w-prose">
                   Phasellus lorem quam molestie id quisque diam aenean nulla in.
@@ -300,5 +279,5 @@ export default function Example() {
         </footer>
       </div>
     </div>
-  );
+  )
 }
