@@ -71,12 +71,12 @@ export default function Example() {
   }
   return (
     <div className="bg-white">
-    <h1>Unlock Demo</h1>
-        <span> Station is currently locked </span> -->
-        <button id ="station-locked-message" onclick="window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()"> Unlock </button> 
-        <div id="station-unlocked-message">Station is now OPEN FOR YOU 🎉</div>
-      <Head>
+
+      <Head> 
+        <title>Shiny Stations</title>
+        <link rel="icon" href="/favicon.ico" />
     
+      </Head>
         <script>
 
               (function(d, s) {
@@ -123,12 +123,9 @@ export default function Example() {
               })
 
           </script>
-
     
-        <title>Shiny Stations</title>
-        <link rel="icon" href="/favicon.ico" />
     
-      </Head>
+    
       <div className="relative overflow-hidden">
         <Popover as="header" className="relative">
           <div className="pt-6 bg-gray-900">
